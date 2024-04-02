@@ -1,0 +1,50 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+
+[tool]
+
+[tool.bandit]
+skips = ["B101", "B301", "B403", "B404", "B603", "B607"]
+
+[tool.poetry]
+authors = ["Marvin van Aalst <marvin.vanaalst@gmail.com>"]
+classifiers = [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+        "Operating System :: MacOS",
+        "Operating System :: OS Independent",
+    ]
+description = "FIXME"
+documentation = "https://marvin.vanaalst.gitlab.io/parameteriser/"
+keywords = ["FIXME"]
+license = "GPL-3.0-or-later"
+maintainers = ["Marvin van Aalst <marvin.vanaalst@gmail.com>"]
+name = "Parameteriser"
+readme = "README.md"
+repository = "https://gitlab.com/marvin.vanaalst/parameteriser"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+typing-extensions = "^4.6.3"
+
+
+[tool.poetry.dev-dependencies]
+ruff = "^0.3.5"
+notebook = "^6.5.4"
+jupyter_contrib_nbextensions = "^0.7.0"
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"

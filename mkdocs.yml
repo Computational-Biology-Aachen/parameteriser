@@ -1,0 +1,26 @@
+site_name: Parameteriser docs
+site_url: https://Parameteriser.gitlab.io/mkdocs
+site_dir: public
+
+nav:
+  - Tutorial: index.ipynb
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+      primary: teal
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+      primary: teal
+
+plugins:
+  - mkdocs-jupyter:
+      ignore_h1_titles: True

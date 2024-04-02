@@ -1,0 +1,28 @@
+repos:
+  # Security tests
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.7
+    hooks:
+      - id: bandit
+        args: [--ini, .bandit]
+        exclude: ^tests/
+
+  # Lint & format
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.2.2
+    hooks:
+      - id: ruff
+        types_or: [ python, pyi, jupyter ]
+        args: [--fix]
+      - id: ruff-format
+        types_or: [ python, pyi, jupyter ]
+
+  # Clean jupyter notebooks
+  - repo: local
+    hooks:
+      - id: jupyter-nb-clear-output
+        name: jupyter-nb-clear-output
+        files: \.ipynb$
+        stages: [commit]
+        language: system
+        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
