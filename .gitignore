@@ -1,3 +1,6 @@
+# sensitive information
+.env
+
 # pixi environments
 .pixi
 
