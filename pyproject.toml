@@ -4,6 +4,9 @@ requires = ["poetry-core>=1.0.0"]
 
 [tool]
 
+[tool.mypy]
+ignore_missing_imports = true
+
 [tool.bandit]
 skips = ["B101", "B301", "B403", "B404", "B603", "B607"]
 
