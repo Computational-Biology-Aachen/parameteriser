@@ -1,26 +1,41 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import TYPE_CHECKING
+
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import qtbutils as qu
+from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from scipy.stats import gaussian_kde
 from sspipe import p
+
+from parameteriser._utils import unwrap
+
+if TYPE_CHECKING:
+    import pandas as pd
+    from matplotlib.axes import Axes
 
 
 def normalise(x: np.ndarray) -> np.ndarray:
     return x / np.sum(x)
 
 
-def x_to_data(ax, val):
+def x_to_data(ax: Axes, val: float) -> float:
     return ax.transLimits.inverted().transform((val, 0))[0]
 
 
-def y_to_data(ax, val):
+def y_to_data(ax: Axes, val: float) -> float:
     return ax.transLimits.inverted().transform((0, val))[1]
 
 
-def add_boxplot(ax, data, color="C0", offset: int = 0):
+def add_boxplot(
+    ax: Axes,
+    data: pd.Series,
+    color: str = "C0",
+    offset: int = 0,
+) -> None:
     _d = data.describe()
     iqr = _d["75%"] - _d["25%"]
     height = y_to_data(ax, 0.05)
@@ -34,7 +49,7 @@ def add_boxplot(ax, data, color="C0", offset: int = 0):
             facecolor=color,
             linewidth=1.5,
             alpha=0.7,
-        )
+        ),
     )
 
     # Bars
@@ -43,7 +58,7 @@ def add_boxplot(ax, data, color="C0", offset: int = 0):
             xdata=[data.median()],
             ydata=[offset * height, offset * height + height],
             color="white",
-        )
+        ),
     )
 
     # Whiskers
@@ -53,7 +68,7 @@ def add_boxplot(ax, data, color="C0", offset: int = 0):
             ydata=[offset * height + height / 2],
             color=color,
             alpha=0.7,
-        )
+        ),
     )
     ax.add_artist(
         Line2D(
@@ -61,7 +76,7 @@ def add_boxplot(ax, data, color="C0", offset: int = 0):
             ydata=[offset * height + height / 2],
             color=color,
             alpha=0.7,
-        )
+        ),
     )
 
 
@@ -72,7 +87,7 @@ def plot_distributions(
     ec: str,
     substrate: str,
     organism_name: str,
-) -> tuple[qu.Figure, qu.Axis]:
+) -> tuple[Figure, Axes]:
     x = np.geomspace(all_kms.min(), all_kms.max(), 1001)
     y1 = gaussian_kde(all_kms)(x) | p(normalise)
     y2 = gaussian_kde(organism_kms)(x) | p(normalise)
@@ -84,7 +99,7 @@ def plot_distributions(
             "ytick.color": "0.8",
             "xtick.labelcolor": "0.3",
             "ytick.labelcolor": "0.3",
-        }
+        },
     ):
         fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
         ax.set_title(f"Km - {ec} - {substrate}")
@@ -102,3 +117,27 @@ def plot_distributions(
         ax.grid()
         ax.set_frame_on(False)
     return fig, ax
+
+
+def savefig(  # noqa: PLR0913
+    plot: Figure | Axes,
+    filename: str,
+    *,
+    path: Path = Path("img"),
+    file_format: str = "png",
+    transparent: bool = False,
+    dpi: float = 200,
+) -> Path:
+    path.mkdir(exist_ok=True, parents=True)
+
+    fig = plot if isinstance(plot, Figure) else unwrap(plot.get_figure())
+
+    filepath = path / f"{filename}.{file_format}"
+
+    fig.savefig(
+        filepath,
+        bbox_inches="tight",
+        transparent=transparent,
+        dpi=dpi,
+    )
+    return filepath

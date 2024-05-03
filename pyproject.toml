@@ -1,14 +1,43 @@
+[project]
+name = "parameteriser"
+version = "0.1.0"
+description = "Add a short description here"
+authors = [
+    {name="Marvin van Aalst", email="marvin.vanaalst@gmail.com"},
+]
+
+
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=1.0.0"]
 
-[tool]
+[tool.ruff]
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN101", "ANN401",
+    "D101", "D102", "D103", "D104", "D105", "D205", "D211", "D213", "D400", "D403", "D415",
+    "E501",
+    "S101", "S301", "S110",
+    "N806",
+    "PGH003",
+    "FIX001", "TD001", "TD002", "TD003",
+    "TRY003",
+    "PD901",
+    "RUF100",
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
 
 [tool.mypy]
 ignore_missing_imports = true
-
-[tool.bandit]
-skips = ["B101", "B301", "B403", "B404", "B603", "B607"]
 
 [tool.poetry]
 authors = ["Marvin van Aalst <marvin.vanaalst@gmail.com>"]
@@ -43,11 +72,33 @@ version = "0.1.0"
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
 typing-extensions = "^4.6.3"
+zeep = "^4.2.1"
+pandas = "^2.2.2"
+scipy = "^1.13.0"
+sspipe = "^0.1.17"
+numpy = "^1.26.4"
+matplotlib = "^3.8.4"
+selenium = "^4.20.0"
+beautifulsoup4 = "^4.12.3"
+requests = "^2.31.0"
 
 
 [tool.poetry.dev-dependencies]
-ruff = "^0.3.5"
+ruff = "^0.4.2"
 notebook = "^6.5.4"
 jupyter_contrib_nbextensions = "^0.7.0"
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+parameteriser = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+install = "poetry install"
+
+[tool.pixi.dependencies]
+poetry = ">=1.8.2,<1.9"
