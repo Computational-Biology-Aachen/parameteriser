@@ -49,9 +49,6 @@ coverage.xml
 # mypy
 .mypy_cache/
 
-# vscode
-.vscode/
-
 # temporary files and folders
 *temp*
 tmp
