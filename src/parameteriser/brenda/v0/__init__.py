@@ -125,7 +125,7 @@ class Brenda:
                 el.click()
 
             # Now source can be loaded
-            soup = BeautifulSoup(wd.page_source)
+            soup = BeautifulSoup(wd.page_source, features="lxml")
 
         return _get_table_from_soup(soup, "tab12"), _get_table_from_soup(soup, "tab44")
 
@@ -165,6 +165,9 @@ class Brenda:
 
         kms["sequence"] = [sequences[i] for i in kms["uniprot"]]
         kcats["sequence"] = [sequences[i] for i in kcats["uniprot"]]
+
+        for df in (kms, kcats):
+            df["value"] = df["value"].astype(float)
 
         kms = kms.reset_index(drop=True)
         kcats = kcats.reset_index(drop=True)
