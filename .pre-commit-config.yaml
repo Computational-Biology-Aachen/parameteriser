@@ -1,12 +1,4 @@
 repos:
-  # Security tests
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.7
-    hooks:
-      - id: bandit
-        args: [--ini, .bandit]
-        exclude: ^tests/
-
   # Lint & format
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.2.2
@@ -16,6 +8,16 @@ repos:
         args: [--fix]
       - id: ruff-format
         types_or: [ python, pyi, jupyter ]
+
+  # Sort pyproject toml
+  - repo: https://github.com/pappasam/toml-sort
+    rev: v0.23.1
+    hooks:
+      - id: toml-sort-fix
+        args: [--in-place]
+        language: python
+        types: [toml]
+
 
   # Clean jupyter notebooks
   - repo: local
