@@ -80,6 +80,31 @@ def add_boxplot(
     )
 
 
+def plot_parameter_distribution(pars: pd.Series) -> tuple[Figure, Axes]:
+    x = np.geomspace(pars.min(), pars.max(), 1001)
+    y = gaussian_kde(pars)(x)
+
+    with plt.rc_context(
+        {
+            "grid.color": "0.8",
+            "xtick.color": "0.8",
+            "ytick.color": "0.8",
+            "xtick.labelcolor": "0.3",
+            "ytick.labelcolor": "0.3",
+        },
+    ):
+        fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
+        ax.set_xlim(pars.min(), pars.max())
+        ax.set_ylim(0, y.max() * 1.1)
+        ax.set_xscale("log")
+        ax.fill_between(x, y, alpha=0.2)
+        ax.plot(x, y)
+        add_boxplot(ax, pars, "C0")
+        ax.grid()
+        ax.set_frame_on(False)
+    return fig, ax
+
+
 def plot_distributions(
     all_kms: pd.Series,
     organism_kms: pd.Series,
