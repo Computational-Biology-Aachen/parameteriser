@@ -17,7 +17,8 @@ from zeep import Client
 
 
 @dataclass
-class BrendaType: ...
+class BrendaType:
+    ...
 
 
 DataClass = TypeVar("DataClass", bound=BrendaType)
