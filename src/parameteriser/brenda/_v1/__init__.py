@@ -11,14 +11,13 @@ import numpy as np
 import pandas as pd
 from parameteriser import _tex
 from parameteriser._paths import _default_cache_dir, _default_path
-from parameteriser._plot import plot_distributions, savefig
+from parameteriser._plot import plot_parameter_distributions, savefig
 from parameteriser._tex import export_tex_document
 from zeep import Client
 
 
 @dataclass
-class BrendaType:
-    ...
+class BrendaType: ...
 
 
 DataClass = TypeVar("DataClass", bound=BrendaType)
@@ -201,7 +200,7 @@ def routine(
     #     ),
     # )  # noqa: ERA001
 
-    fig, ax = plot_distributions(
+    fig, ax = plot_parameter_distributions(
         all_kms,
         organism_kms,
         ec=ec,
@@ -219,7 +218,7 @@ def routine(
     )
     plt.show()
 
-    fig, ax = plot_distributions(
+    fig, ax = plot_parameter_distributions(
         all_kms_filtered,
         organism_kms_filtered,
         ec=ec,

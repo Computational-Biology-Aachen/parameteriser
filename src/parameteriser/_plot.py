@@ -105,12 +105,10 @@ def plot_parameter_distribution(pars: pd.Series) -> tuple[Figure, Axes]:
     return fig, ax
 
 
-def plot_distributions(
+def plot_parameter_distributions(
     all_kms: pd.Series,
     organism_kms: pd.Series,
     *,
-    ec: str,
-    substrate: str,
     organism_name: str,
 ) -> tuple[Figure, Axes]:
     x = np.geomspace(all_kms.min(), all_kms.max(), 1001)
@@ -127,7 +125,6 @@ def plot_distributions(
         },
     ):
         fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
-        ax.set_title(f"Km - {ec} - {substrate}")
         ax.set_xlim(all_kms.min(), all_kms.max())
         ax.set_ylim(0, max(y1.max(), y2.max()) * 1.1)
         ax.set_xscale("log")
