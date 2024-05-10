@@ -14,7 +14,7 @@ repos:
     rev: v0.23.1
     hooks:
       - id: toml-sort-fix
-        args: [--in-place]
+        args: [--in-place, --sort-table-keys]
         language: python
         types: [toml]
 
