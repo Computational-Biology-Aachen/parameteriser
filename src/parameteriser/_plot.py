@@ -84,6 +84,7 @@ def plot_parameter_distribution(
     pars: pd.Series,
     ax: Axes | None = None,
     color: str = "C0",
+    xlim: tuple[float | None, float | None] | None = None,
 ) -> tuple[Figure, Axes]:
     x = np.geomspace(pars.min(), pars.max(), 1001)
     y = gaussian_kde(pars)(x)
@@ -102,7 +103,8 @@ def plot_parameter_distribution(
         else:
             fig = cast(Figure, ax.get_figure())
 
-        ax.set_xlim(pars.min(), pars.max())
+        if xlim is None:
+            ax.set_xlim(pars.min(), pars.max())
         ax.set_ylim(0, y.max() * 1.1)
         ax.set_xscale("log")
         ax.fill_between(x, y, alpha=0.2, color=color)
