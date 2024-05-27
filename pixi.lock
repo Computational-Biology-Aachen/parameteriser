@@ -19,6 +19,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/attr-2.5.1-h166bdaf_1.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/attrs-23.2.0-pyh71513ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/beautifulsoup4-4.12.3-pyha770c72_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/biopython-1.83-py312h98912ed_0.conda
       - conda: https://conda.anaconda.org/bioconda/linux-64/blast-2.15.0-pl5321h6f7f691_1.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/bleach-6.1.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/brotli-1.1.0-hd590300_1.conda
@@ -536,6 +537,24 @@ packages:
   - pkg:pypi/beautifulsoup4
   size: 118200
   timestamp: 1705564819537
+- kind: conda
+  name: biopython
+  version: '1.83'
+  build: py312h98912ed_0
+  subdir: linux-64
+  url: https://conda.anaconda.org/conda-forge/linux-64/biopython-1.83-py312h98912ed_0.conda
+  sha256: 15e350a1acc5bb59c245b04fbbd2a1342f1e3a3595b5c13c9623df7f75a56607
+  md5: 53e12da7730d109fddca08aef28a4a50
+  depends:
+  - libgcc-ng >=12
+  - numpy
+  - python >=3.12,<3.13.0a0
+  - python_abi 3.12.* *_cp312
+  license: LicenseRef-Biopython
+  purls:
+  - pkg:pypi/biopython
+  size: 3278068
+  timestamp: 1704895610042
 - kind: conda
   name: blast
   version: 2.15.0
