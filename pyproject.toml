@@ -3,10 +3,23 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools >= 61.0"]
 
 [project]
-authors = [{name = "Marvin van Aalst", email = "marvin.vanaalst@gmail.com"}]
-description = ""
+authors = [{email = "marvin.vanaalst@gmail.com", name = "Marvin van Aalst"}]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+]
+description = "Parameterisation of ODE models using the brenda database and AI tools"
+keywords = ["ai", "enzyme", "kinetics", "machine learning"]
+license = {file = "LICENSE"}
 name = "parameteriser"
+readme = "README.md"
 version = "0.1.0"
+
+[project.urls]
+Changelog = "https://gitlab.com/marvin.vanaalst/parameteriser/changelog.rst"
+Documentation = "https://parameteriser.gitlab.io/mkdocs/"
+Homepage = "https://gitlab.com/marvin.vanaalst/parameteriser"
+Issues = "https://gitlab.com/marvin.vanaalst/parameteriser/-/issues"
+Repository = "https://gitlab.com/marvin.vanaalst/parameteriser.git"
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -14,7 +27,7 @@ ignore_missing_imports = true
 [tool.pixi.dependencies]
 beautifulsoup4 = ">=4.12.3"
 biopython = ">=1.83,<2"
-blast = {version = ">=2.15.0", channel = "bioconda"}
+blast = {channel = "bioconda", version = ">=2.15.0"}
 jupyter = "*"
 jupyter_contrib_nbextensions = ">=0.7.0"
 matplotlib = ">=3.8.4"
@@ -36,8 +49,74 @@ types-requests = ">=2.31.0.20240406"
 typing-extensions = ">=4.11.0"
 zeep = ">=4.2.1"
 
+[tool.pixi.environments]
+default = {solve-group = "default"}
+dev = {features = ["build", "docs", "lint", "test"], solve-group = "default"}
+
+[tool.pixi.feature.build.dependencies]
+rattler-build = ">=0.16.1"
+
+[tool.pixi.feature.build.tasks]
+build = {cmd = [
+  "--output-dir",
+  "--recipe",
+  "/tmp/rattler/parameteriser",
+  "build",
+  "rattler-build",
+  "rattler/recipe.yaml",
+], depends_on = [
+  "create-tmp-dir",
+  "update-recipe",
+]}
+create-tmp-dir = 'python -c "from pathlib import Path; Path(\"/tmp/rattler/parameteriser\").mkdir(exist_ok=True, parents=True)"'
+update-recipe = "python inject-rattler-recipe.py"
+upload = {cmd = [
+  "/tmp/rattler/deepmolecules/noarch/*.conda",
+  "mcva-test",
+  "prefix",
+  "rattler-build",
+  "upload",
+], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
+
+[tool.pixi.feature.docs.dependencies]
+jupyter = "*"
+jupyter_contrib_nbextensions = "*"
+mkdocs = ">=1.5.3,<1.6.0"
+mkdocs-jupyter = ">=0.24.6"
+mkdocs-material = "*"
+
+[tool.pixi.feature.docs.tasks]
+build-docs = {cmd = [
+  "--strict",
+  "--verbose",
+  "build",
+  "mkdocs",
+], depends_on = "install", env = {JUPYTER_PLATFORM_DIRS = "1", PYDEVD_DISABLE_FILE_VALIDATION = "1"}}
+serve-docs = {cmd = [
+  "mkdocs",
+  "serve",
+], depends_on = "install", env = {JUPYTER_PLATFORM_DIRS = "1", PYDEVD_DISABLE_FILE_VALIDATION = "1"}}
+
+[tool.pixi.feature.lint.dependencies]
+pre-commit = ">=3.7.0"
+ruff = ">=0.4.3"
+types-pyyaml = ">=6.0.12.20240311"
+types-requests = ">=2.31.0.20240406"
+types-tqdm = ">=4.66.0.20240417"
+typing-extensions = ">=4.11.0"
+
+[tool.pixi.feature.lint.tasks]
+check = {cmd = "ruff check .", depends_on = "install"}
+
+[tool.pixi.feature.test.dependencies]
+pytest = ">=8.1.2"
+pytest-cov = ">=5.0.0"
+
+[tool.pixi.feature.test.tasks]
+test = {cmd = "pytest --cov", depends_on = "install"}
+
 [tool.pixi.project]
-channels = ["conda-forge", "bioconda"]
+channels = ["conda-forge"]
 platforms = ["linux-64"]
 
 [tool.pixi.pypi-dependencies]
@@ -47,17 +126,14 @@ sspipe = ">=0.1.17"
 linux = "5.4.0"
 
 [tool.pixi.tasks]
-check = "ruff check ."
 install = "pip install --editable . && pre-commit install"
-test = "pytest --cov"
 
 [tool.ruff]
-include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+include = ["**/pyproject.toml", "*.ipynb", "*.py", "*.pyi"]
 indent-width = 4
 line-length = 88
 
 [tool.ruff.lint]
-# Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
 ignore = [
   "ANN101",
@@ -75,22 +151,39 @@ ignore = [
   "D403",
   "D415",
   "E501",
-  "S101",
-  "S301",
-  "S110",
+  "FIX001",
   "N806",
+  "PD901",
   "PGH003",
   "PLR0913",
-  "FIX001",
+  "RUF100",
+  "S101",
+  "S110",
+  "S301",
   "TD001",
   "TD002",
   "TD003",
   "TRY003",
-  "PD901",
-  "RUF100"
 ]
 select = ["ALL"]
 unfixable = []
 
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = ["T201"]
+
+[tool.tomlsort]
+all = true
+ignore_case = true
+in_place = true
+no_block_comments = true
+no_comments = true
+no_footer_comments = true
+no_header_comments = true
+no_inline_comments = true
+no_sort_tables = true
+sort_inline_arrays = true
+sort_inline_tables = true
+sort_table_keys = true
+spaces_before_inline_comment = 2
+spaces_indent_inline_array = 2
+trailing_comma_inline_array = true

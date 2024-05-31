@@ -1,5 +1,5 @@
 {
-    "python.defaultInterpreterPath": ".pixi/envs/default/bin/python3",
+    "python.defaultInterpreterPath": ".pixi/envs/dev/bin/python3",
     "python.terminal.activateEnvironment": false,
     "[markdown]": {
         "editor.wordWrap": "bounded",
@@ -35,4 +35,12 @@
         "**/*.egg-info": true,
     },
     "files.eol": "\n",
+    "evenBetterToml.formatter.arrayAutoExpand": true,
+    "evenBetterToml.formatter.inlineTableExpand": true,
+    "evenBetterToml.formatter.arrayTrailingComma": true,
+    "evenBetterToml.formatter.columnWidth": 79,
+    "evenBetterToml.formatter.compactArrays": true,
+    "evenBetterToml.formatter.compactEntries": false,
+    "evenBetterToml.formatter.compactInlineTables": true,
+    "evenBetterToml.formatter.reorderKeys": true,
 }

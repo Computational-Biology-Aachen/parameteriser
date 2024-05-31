@@ -1,46 +1,46 @@
 stages:
+  - lint
   - test
   - build
 
 image: marvinvanaalst/pixi-ci:0.1
 
 prior:
-  allow_failure: true
-  stage: test
+  stage: lint
   script:
-    - pixi run install
-    - pixi run check
+    - pixi run -e dev install
+    - pixi run -e dev check
   except:
     - merge_requests
     - main
 
-# test:
-#   stage: test
-#   script:
-#     - pixi run install
-#     - pixi run test
-#   coverage: "/TOTAL.+ ([0-9]{1,3}%)/"
-#   only:
-#     - merge_requests
-#     - main # if i push directly and for coverage badge
+test:
+  stage: test
+  script:
+    - pixi run -e dev install
+    - pixi run -e dev test
+  coverage: "/TOTAL.+ ([0-9]{1,3}%)/"
+  only:
+    - merge_requests
+    - main # if i push directly and for coverage badge
 
-# Enable this once you are ready to publish
-# build:
-#   stage: build
-#   script:
-#     - poetry build
-#     - poetry publish --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD"
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#       changes:
-#         - pyproject.toml
+build:
+  stage: build
+  script:
+    - pixi run install
+    - pixi run build
+    - pixi run upload
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - pyproject.toml
 
 pages:
   allow_failure: true
   stage: build
   script:
-    - pip install -r docs/requirements.txt
-    - mkdocs build --strict --verbose
+    - pixi run -e dev install
+    - pixi run -e dev build-docs
   artifacts:
     paths:
       - public

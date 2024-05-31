@@ -1,0 +1,44 @@
+about:
+  description: ${{ description }}
+  documentation: ${{ source_url }}
+  homepage: ${{ source_url }}
+  license: MIT
+  repository: ${{ source_url }}
+  summary: ${{ description }}
+build:
+  noarch: python
+  number: 0
+  script:
+    - python -m pip install . -vv --no-deps --no-build-isolation
+context:
+  description: Prediction of enzyme kinetic parameters using deep learning models
+  name: deepmolecules
+  source_url: https://gitlab.com/marvin.vanaalst/deepmolecules.git
+  version: 0.1.0
+package:
+  name: deepmolecules
+  version: ${{ version }}
+requirements:
+  host:
+    - pip
+    - python 3.11
+  run:
+    - numpy =1.26.4
+    - packaging >=24.0
+    - pandas >=2.2.2
+    - pandas-stubs >=2.0.1.230501
+    - pip >=24.0
+    - py-xgboost >=2.0.3
+    - python >=3.11
+    - pytorch >=2.1.2
+    - rdkit >=2024.03.2
+    - tensorflow >=2.15.0
+    - tqdm >=4.66.4
+    - fair-esm ==0.4.0
+source:
+  path: ..
+  use_gitignore: true
+tests:
+  - python:
+      imports:
+        - deepmolecules
