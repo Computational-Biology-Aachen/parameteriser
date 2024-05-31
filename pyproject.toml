@@ -78,8 +78,9 @@ upload = {cmd = [
   "rattler-build",
   "upload",
   "prefix",
+  "--channel",
   "mcva-test",
-  "/tmp/rattler/deepmolecules/noarch/*.conda",
+  "/tmp/rattler/parameteriser/noarch/*.conda",
 ], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
 
 [tool.pixi.feature.docs.dependencies]
