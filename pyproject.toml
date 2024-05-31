@@ -58,12 +58,12 @@ rattler-build = ">=0.16.1"
 
 [tool.pixi.feature.build.tasks]
 build = {cmd = [
-  "--output-dir",
-  "--recipe",
-  "/tmp/rattler/parameteriser",
-  "build",
   "rattler-build",
+  "build",
+  "--recipe",
   "rattler/recipe.yaml",
+  "--output-dir",
+  "/tmp/rattler/parameteriser",
 ], depends_on = [
   "create-tmp-dir",
   "update-recipe",
@@ -71,11 +71,11 @@ build = {cmd = [
 create-tmp-dir = 'python -c "from pathlib import Path; Path(\"/tmp/rattler/parameteriser\").mkdir(exist_ok=True, parents=True)"'
 update-recipe = "python inject-rattler-recipe.py"
 upload = {cmd = [
-  "/tmp/rattler/deepmolecules/noarch/*.conda",
-  "mcva-test",
-  "prefix",
   "rattler-build",
   "upload",
+  "prefix",
+  "mcva-test",
+  "/tmp/rattler/deepmolecules/noarch/*.conda",
 ], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
 
 [tool.pixi.feature.docs.dependencies]
@@ -87,10 +87,10 @@ mkdocs-material = "*"
 
 [tool.pixi.feature.docs.tasks]
 build-docs = {cmd = [
+  "mkdocs",
+  "build",
   "--strict",
   "--verbose",
-  "build",
-  "mkdocs",
 ], depends_on = "install", env = {JUPYTER_PLATFORM_DIRS = "1", PYDEVD_DISABLE_FILE_VALIDATION = "1"}}
 serve-docs = {cmd = [
   "mkdocs",
@@ -116,7 +116,7 @@ pytest-cov = ">=5.0.0"
 test = {cmd = "pytest --cov", depends_on = "install"}
 
 [tool.pixi.project]
-channels = ["conda-forge"]
+channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64"]
 
 [tool.pixi.pypi-dependencies]
@@ -172,18 +172,6 @@ unfixable = []
 "*.ipynb" = ["T201"]
 
 [tool.tomlsort]
-all = true
-ignore_case = true
-in_place = true
-no_block_comments = true
-no_comments = true
-no_footer_comments = true
-no_header_comments = true
-no_inline_comments = true
-no_sort_tables = true
-sort_inline_arrays = true
-sort_inline_tables = true
-sort_table_keys = true
 spaces_before_inline_comment = 2
 spaces_indent_inline_array = 2
 trailing_comma_inline_array = true
