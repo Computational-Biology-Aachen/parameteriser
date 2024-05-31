@@ -9,36 +9,47 @@ build:
   noarch: python
   number: 0
   script:
-    - python -m pip install . -vv --no-deps --no-build-isolation
+  - python -m pip install . -vv --no-deps --no-build-isolation
 context:
-  description: Prediction of enzyme kinetic parameters using deep learning models
-  name: deepmolecules
-  source_url: https://gitlab.com/marvin.vanaalst/deepmolecules.git
+  description: Parameterisation of ODE models using the brenda database and AI tools
+  name: parameteriser
+  source_url: https://gitlab.com/marvin.vanaalst/parameteriser.git
   version: 0.1.0
 package:
-  name: deepmolecules
+  name: parameteriser
   version: ${{ version }}
 requirements:
   host:
-    - pip
-    - python 3.11
+  - pip
+  - python 3.11
   run:
-    - numpy =1.26.4
-    - packaging >=24.0
-    - pandas >=2.2.2
-    - pandas-stubs >=2.0.1.230501
-    - pip >=24.0
-    - py-xgboost >=2.0.3
-    - python >=3.11
-    - pytorch >=2.1.2
-    - rdkit >=2024.03.2
-    - tensorflow >=2.15.0
-    - tqdm >=4.66.4
-    - fair-esm ==0.4.0
+  - beautifulsoup4 >=4.12.3
+  - biopython >=1.83,<2
+  - blast >=2.15.0
+  - jupyter =*
+  - jupyter_contrib_nbextensions >=0.7.0
+  - matplotlib >=3.8.4
+  - more-itertools >=10.2.0,<10.3
+  - notebook >=6.5.4
+  - numpy >=1.26.4
+  - pandas >=2.2.2
+  - pandas-stubs >=2.0.1.230501
+  - pip >=24.0,<25
+  - pre-commit >=3.7.0
+  - pytest >=8.1.2
+  - pytest-cov >=5.0.0
+  - python >=3.11
+  - requests >=2.31.0
+  - ruff >=0.4.3
+  - scipy >=1.13.0
+  - selenium >=4.20.0
+  - types-requests >=2.31.0.20240406
+  - typing-extensions >=4.11.0
+  - zeep >=4.2.1
 source:
   path: ..
   use_gitignore: true
 tests:
-  - python:
-      imports:
-        - deepmolecules
+- python:
+    imports:
+    - parameteriser

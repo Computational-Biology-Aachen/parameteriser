@@ -60,6 +60,10 @@ rattler-build = ">=0.16.1"
 build = {cmd = [
   "rattler-build",
   "build",
+  "-c",
+  "conda-forge",
+  "-c",
+  "bioconda",
   "--recipe",
   "rattler/recipe.yaml",
   "--output-dir",
@@ -118,9 +122,6 @@ test = {cmd = "pytest --cov", depends_on = "install"}
 [tool.pixi.project]
 channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64"]
-
-[tool.pixi.pypi-dependencies]
-sspipe = ">=0.1.17"
 
 [tool.pixi.system-requirements]
 linux = "5.4.0"

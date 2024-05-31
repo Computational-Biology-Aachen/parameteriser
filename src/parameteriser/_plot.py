@@ -9,7 +9,6 @@ from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 from scipy.stats import gaussian_kde
-from sspipe import p
 
 from parameteriser._utils import unwrap
 
@@ -122,8 +121,8 @@ def plot_parameter_distributions(
     organism_name: str,
 ) -> tuple[Figure, Axes]:
     x = np.geomspace(all_kms.min(), all_kms.max(), 1001)
-    y1 = gaussian_kde(all_kms)(x) | p(normalise)
-    y2 = gaussian_kde(organism_kms)(x) | p(normalise)
+    y1 = normalise(gaussian_kde(all_kms)(x))
+    y2 = normalise(gaussian_kde(organism_kms)(x))
 
     with plt.rc_context(
         {

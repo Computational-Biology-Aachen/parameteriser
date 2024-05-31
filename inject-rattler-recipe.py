@@ -1,10 +1,20 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 import tomllib
 import yaml
 
 
-def format_dependencies(k: str, v: str) -> str:
+def format_dependencies(k: str, v: str | dict[str, str]) -> str:
+    if isinstance(v, dict):
+        version = v["version"]
+        # NOTE: we are throwing away the explicit channel information here
+        # because it doesn't work well with rattler-build
+        if version.startswith(("=", ">")):
+            return f"{k} {version}"
+        return f"{k} ={version}"
+
     if v.startswith(("=", ">")):
         return f"{k} {v}"
     return f"{k} ={v}"
