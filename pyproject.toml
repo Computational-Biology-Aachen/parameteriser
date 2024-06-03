@@ -73,15 +73,17 @@ build = {cmd = [
   "update-recipe",
 ]}
 create-tmp-dir = 'python -c "from pathlib import Path; Path(\"/tmp/rattler/parameteriser\").mkdir(exist_ok=True, parents=True)"'
+rm-build = "rm /tmp/rattler/parameteriser/noarch/*.conda"
 update-recipe = "python inject-rattler-recipe.py"
-upload = {cmd = [
+_upload = {cmd = [
   "rattler-build",
   "upload",
   "prefix",
   "--channel",
   "mcva-test",
-  "/tmp/rattler/parameteriser/noarch/*.conda",
+  "/tmp/rattler/parameteriser/noarch/parameteriser*.conda",
 ], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
+upload = {cmd = "echo uploaded", depends_on = ["_upload", "rm-build"]}
 
 [tool.pixi.feature.docs.dependencies]
 jupyter = "*"
