@@ -27,9 +27,9 @@ test:
 build:
   stage: build
   script:
-    - pixi run -e install
-    - pixi run -e build
-    - pixi run -e upload
+    - pixi run -e dev install
+    - pixi run -e dev build
+    - pixi run -e dev upload
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
