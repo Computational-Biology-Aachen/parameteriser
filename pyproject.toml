@@ -57,6 +57,14 @@ dev = {features = ["build", "docs", "lint", "test"], solve-group = "default"}
 rattler-build = ">=0.16.1"
 
 [tool.pixi.feature.build.tasks]
+_upload = {cmd = [
+  "rattler-build",
+  "upload",
+  "prefix",
+  "--channel",
+  "mcva-test",
+  "/tmp/rattler/parameteriser/noarch/parameteriser*.conda",
+], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
 build = {cmd = [
   "rattler-build",
   "build",
@@ -75,14 +83,6 @@ build = {cmd = [
 create-tmp-dir = 'python -c "from pathlib import Path; Path(\"/tmp/rattler/parameteriser\").mkdir(exist_ok=True, parents=True)"'
 rm-build = "rm /tmp/rattler/parameteriser/noarch/*.conda"
 update-recipe = "python inject-rattler-recipe.py"
-_upload = {cmd = [
-  "rattler-build",
-  "upload",
-  "prefix",
-  "--channel",
-  "mcva-test",
-  "/tmp/rattler/parameteriser/noarch/parameteriser*.conda",
-], env = {PREFIX_API_KEY = "YOUR_TOKEN"}}
 upload = {cmd = "echo uploaded", depends_on = ["_upload", "rm-build"]}
 
 [tool.pixi.feature.docs.dependencies]
@@ -168,12 +168,17 @@ ignore = [
   "TD002",
   "TD003",
   "TRY003",
+  "PD901",
+  "RUF100",
 ]
 select = ["ALL"]
 unfixable = []
 
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = ["T201"]
+"tests/*" = [
+  'S101',  # assert
+]
 
 [tool.tomlsort]
 spaces_before_inline_comment = 2
