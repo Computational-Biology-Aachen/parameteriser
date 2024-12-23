@@ -3,13 +3,14 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import asdict, dataclass, field
-from typing import TYPE_CHECKING, Callable, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import pandas as pd
 from parameteriser._paths import _default_cache_dir
 from zeep import Client
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from pathlib import Path
 
 

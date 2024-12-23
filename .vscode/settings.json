@@ -1,5 +1,5 @@
 {
-    "python.defaultInterpreterPath": ".pixi/envs/dev/bin/python3",
+    "python.defaultInterpreterPath": ".pixi/envs/default/bin/python3",
     "python.terminal.activateEnvironment": false,
     "[markdown]": {
         "editor.wordWrap": "bounded",
@@ -29,7 +29,7 @@
         "**/*.bcf": true,
         "**/*.mypy_cache": true,
         "**/*.pytest_cache": true,
-        "**/*.pixi": true,
+        "**/*.pixi": false,
         "**/*.ruff_cache": true,
         "**/__pycache__": true,
         "**/*.egg-info": true,

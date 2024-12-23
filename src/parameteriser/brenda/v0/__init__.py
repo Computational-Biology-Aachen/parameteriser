@@ -6,7 +6,7 @@ import re
 from dataclasses import dataclass, field
 from logging import getLogger
 from pathlib import Path
-from typing import Iterable
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -15,6 +15,9 @@ from bs4 import BeautifulSoup, Tag
 from parameteriser._paths import _clear_files_of_dir, _default_cache_dir, _default_path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 RE_EC: re.Pattern[str] = re.compile(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
 UNIPROT_PATTERN: str = (
@@ -342,3 +345,37 @@ class Brenda:
             )
 
         return kms, kcats
+
+    def get_kms(
+        self,
+        ec: str,
+        *,
+        check_ec: bool = True,
+        add_uniprot_sequences: bool = True,
+        filter_mutant: bool = True,
+        filter_missing_sequences: bool = True,
+    ) -> pd.DataFrame:
+        return self.get_kms_and_kcats(
+            ec=ec,
+            check_ec=check_ec,
+            add_uniprot_sequences=add_uniprot_sequences,
+            filter_mutant=filter_mutant,
+            filter_missing_sequences=filter_missing_sequences,
+        )[0]
+
+    def get_kcats(
+        self,
+        ec: str,
+        *,
+        check_ec: bool = True,
+        add_uniprot_sequences: bool = True,
+        filter_mutant: bool = True,
+        filter_missing_sequences: bool = True,
+    ) -> pd.DataFrame:
+        return self.get_kms_and_kcats(
+            ec=ec,
+            check_ec=check_ec,
+            add_uniprot_sequences=add_uniprot_sequences,
+            filter_mutant=filter_mutant,
+            filter_missing_sequences=filter_missing_sequences,
+        )[1]

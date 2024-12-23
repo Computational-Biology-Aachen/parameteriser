@@ -10,6 +10,8 @@ import pandas as pd
 
 from parameteriser._paths import _default_temp_dir
 
+__all__ = ["blast_sequence_against_others"]
+
 if TYPE_CHECKING:
     from pathlib import Path
 
@@ -26,8 +28,8 @@ def _write_proteome(sequences: pd.Series, tmp_dir: Path) -> Path:
 
 def _generate_pblast_db(proteome: Path) -> Path:
     proteome_db = proteome.parent / proteome.stem
-    subprocess.run(
-        [  # noqa: S603, S607
+    subprocess.run(  # noqa: S603
+        [  # noqa: S607
             "makeblastdb",
             "-in",
             proteome,
@@ -70,8 +72,8 @@ def _run_blastp(
         Outputs the matches in a tsv table format as a multiline-string
 
     """
-    out = subprocess.run(
-        [  # noqa: S603, S607
+    out = subprocess.run(  # noqa: S603
+        [  # noqa: S607
             "blastp",
             "-db",
             db,

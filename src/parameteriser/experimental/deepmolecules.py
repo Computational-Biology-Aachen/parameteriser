@@ -4,8 +4,8 @@ from deepmolecules import kcat as _kcat
 from deepmolecules import km as _km
 
 __all__ = [
-    "predict_km",
     "predict_kcat",
+    "predict_km",
 ]
 
 

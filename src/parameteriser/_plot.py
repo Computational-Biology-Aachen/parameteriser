@@ -12,6 +12,16 @@ from scipy.stats import gaussian_kde
 
 from parameteriser._utils import unwrap
 
+__all__ = [
+    "add_boxplot",
+    "normalise",
+    "plot_parameter_distribution",
+    "plot_parameter_distributions",
+    "savefig",
+    "x_to_data",
+    "y_to_data",
+]
+
 if TYPE_CHECKING:
     import pandas as pd
     from matplotlib.axes import Axes
@@ -80,13 +90,15 @@ def add_boxplot(
 
 
 def plot_parameter_distribution(
-    pars: pd.Series,
-    ax: Axes | None = None,
-    color: str = "C0",
-    xlim: tuple[float | None, float | None] | None = None,
+    kms: pd.Series,
+    title: str,
+    max_kms_to_plot: int = 20,
 ) -> tuple[Figure, Axes]:
-    x = np.geomspace(pars.min(), pars.max(), 1001)
-    y = gaussian_kde(pars)(x)
+    xmin = kms.min() * 0.8
+    xmax = kms.max() * 1.2
+
+    x = np.geomspace(xmin, xmax, 1001)
+    y1 = gaussian_kde(kms)(x)
 
     with plt.rc_context(
         {
@@ -97,20 +109,21 @@ def plot_parameter_distribution(
             "ytick.labelcolor": "0.3",
         },
     ):
-        if ax is None:
-            fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
-        else:
-            fig = cast(Figure, ax.get_figure())
-
-        if xlim is None:
-            ax.set_xlim(pars.min(), pars.max())
-        ax.set_ylim(0, y.max() * 1.1)
+        fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
+        ax.set_xlim(xmin, xmax)
         ax.set_xscale("log")
-        ax.fill_between(x, y, alpha=0.2, color=color)
-        ax.plot(x, y, color=color)
-        add_boxplot(ax, pars, color)
-        ax.grid()
+
+        ax.fill_between(x, y1, alpha=0.2)
+        ax.plot(x, y1, label=f"Brenda, n={len(kms)}")
+        ax.grid(visible=True)
         ax.set_frame_on(False)
+        ax.legend()
+
+    ax.set_title(title)
+
+    if len(kms) < max_kms_to_plot:
+        for val in kms.to_numpy():
+            ax.axvline(val, ymin=0.045, ymax=0.065, color="black")
     return fig, ax
 
 
@@ -150,7 +163,7 @@ def plot_parameter_distributions(
     return fig, ax
 
 
-def savefig(  # noqa: PLR0913
+def savefig(
     plot: Figure | Axes,
     filename: str,
     *,
@@ -161,7 +174,7 @@ def savefig(  # noqa: PLR0913
 ) -> Path:
     path.mkdir(exist_ok=True, parents=True)
 
-    fig = plot if isinstance(plot, Figure) else unwrap(plot.get_figure())
+    fig = plot if isinstance(plot, Figure) else cast(Figure, unwrap(plot.get_figure()))
 
     filepath = path / f"{filename}.{file_format}"
 

@@ -12,7 +12,25 @@
 
 ## Installation
 
-FIXME
+### Basic
+
+If you just want to interface the brenda database, you can use [uv](https://astral.sh/blog/uv)
+
+`uv sync` or `uv sync --extra dev` if you also want to install e.g. jupyter notebook.
+
+Then choose the resulting virtual environment in `.venv/bin/python`
+
+
+### Full
+
+**This is currently broken due to a numpy 1 / 2 version mismatch**
+
+If you also want to enable experimental features, such as interfacing the [deepmolecules package](), use [pixi](https://pixi.sh/latest/).
+
+`pixi install`
+
+The choose the resulting virtual environment in `.pixi/envs/default/bin/python`
+
 
 ## License
 

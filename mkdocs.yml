@@ -1,9 +1,10 @@
 site_name: Parameteriser docs
-site_url: https://Parameteriser.gitlab.io/mkdocs
+site_url: https://parameteriser.gitlab.io/mkdocs
 site_dir: public
 
 nav:
   - Tutorial: index.ipynb
+  - Experimental: experimental.ipynb
 
 theme:
   name: material

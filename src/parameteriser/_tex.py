@@ -1,8 +1,31 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
+
+__all__ = [
+    "bold",
+    "chapter",
+    "clearpage",
+    "export_tex_document",
+    "figure",
+    "list_as_bold",
+    "list_with_headers",
+    "math",
+    "math_il",
+    "mathrm",
+    "paragraph",
+    "part",
+    "section",
+    "section_",
+    "subparagraph",
+    "subsection",
+    "subsection_",
+    "subsubsection",
+    "subsubsection_",
+]
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from pathlib import Path
 
 right_arrow = r"\xrightarrow{}"

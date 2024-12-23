@@ -1,5 +1,4 @@
 repos:
-  # Lint & format
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.2.2
     hooks:
@@ -9,7 +8,6 @@ repos:
       - id: ruff-format
         types_or: [ python, pyi, jupyter ]
 
-  # Sort pyproject toml
   - repo: https://github.com/pappasam/toml-sort
     rev: v0.23.1
     hooks:
@@ -17,14 +15,3 @@ repos:
         args: [--in-place, --sort-table-keys]
         language: python
         types: [toml]
-
-
-  # Clean jupyter notebooks
-  - repo: local
-    hooks:
-      - id: jupyter-nb-clear-output
-        name: jupyter-nb-clear-output
-        files: \.ipynb$
-        stages: [commit]
-        language: system
-        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace

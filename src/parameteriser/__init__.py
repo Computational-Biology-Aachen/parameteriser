@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 __all__ = [
-    "brenda",
     "blast_sequence_against_others",
-    "plot_parameter_distributions",
-    "plot_parameter_distribution",
-    "print_table",
-    "print_organisms",
+    "brenda",
     "estimate_mean_std",
+    "plot_parameter_distribution",
+    "plot_parameter_distributions",
+    "print_organisms",
+    "print_table",
     "select_organism",
     "select_substrate",
 ]
