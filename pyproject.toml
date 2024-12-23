@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools >= 61.0"]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
 
 [project]
 authors = [{email = "marvin.vanaalst@gmail.com", name = "Marvin van Aalst"}]
@@ -60,7 +60,6 @@ line-length = 88
 [tool.ruff.lint]
 fixable = ["ALL"]
 ignore = [
-  "ANN101",
   "ANN401",
   "D100",
   "D101",
@@ -99,7 +98,9 @@ unfixable = []
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = ["T201"]
 "tests/*" = [
-  'S101',  # assert
+  "S101",  # assert
+  "PD901",  # df name
+  "ERA001",  # commented-out code
 ]
 
 [tool.tomlsort]
