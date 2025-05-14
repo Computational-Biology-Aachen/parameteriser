@@ -74,7 +74,7 @@ class Brenda:
 
         return data
 
-    def get_km(self, ec_number: str, *, verbose: bool = False) -> pd.DataFrame:
+    def get_kms(self, ec_number: str, *, verbose: bool = False) -> pd.DataFrame:
         def download() -> list[Km]:
             return [
                 Km(
