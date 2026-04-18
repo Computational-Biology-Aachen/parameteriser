@@ -47,3 +47,13 @@ If you experience issues using the software please contact us through our [issue
 ## Contributing
 
 All contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas are welcome. See our [contribution guide](gitlab.com/marvin.vanaalst/parameteriser/blob/main/CONTRIBUTING.md) for more information.
+
+## Tool family 🏠
+
+`Parameteriser` is part of a larger family of tools that are designed with a similar set of abstractions. Check them out!
+
+- [MxlPy](https://github.com/Computational-Biology-Aachen/MxlPy) is a Python package for mechanistic learning (Mxl)
+- [MxlBricks](https://github.com/Computational-Biology-Aachen/mxl-bricks) is built on top of `MxlPy` to build mechanistic models composed of pre-defined reactions (bricks)
+- [MxlModels](https://github.com/Computational-Biology-Aachen/mxl-models) supplies flat, single-file versions of MxlBricks models for easy inspection
+- [MxlWeb](https://github.com/Computational-Biology-Aachen/mxl-web) brings simulation of mechanistic models to the browser!
+- [pysbml](https://github.com/Computational-Biology-Aachen/pysbml) simplifies SBML models for import/export with MxlPy
