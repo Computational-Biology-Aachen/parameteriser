@@ -24,7 +24,7 @@ license = {file = "LICENSE"}
 name = "parameteriser"
 optional-dependencies = {dev = [
   "toml-sort>=0.23.1",
-  "ruff>=0.7.1",
+  "ruff>=0.15.11",
   "coverage>=7.6.4",
   "jupyter>=1.1.1",
   "mypy>=1.13.0",

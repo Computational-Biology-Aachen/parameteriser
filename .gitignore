@@ -56,3 +56,7 @@ tmp
 .pixi
 *.egg-info
 
+# AI config files
+.github/copilot-instructions.md
+.claude
+CLAUDE.md
