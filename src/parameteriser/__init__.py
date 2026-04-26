@@ -1,3 +1,5 @@
+"""Kinetic parameter lookup from BRENDA and sequence databases."""
+
 from __future__ import annotations
 
 __all__ = [

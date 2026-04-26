@@ -2,6 +2,11 @@
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
+[dependency-groups]
+dev = [
+  "ruff>=0.15.11",
+]
+
 [project]
 authors = [{email = "marvin.vanaalst@gmail.com", name = "Marvin van Aalst"}]
 classifiers = [
@@ -59,6 +64,7 @@ line-length = 88
 [tool.ruff.lint]
 fixable = ["ALL"]
 ignore = [
+  "ANN101",
   "ANN401",
   "D100",
   "D101",

@@ -1,3 +1,5 @@
+"""BRENDA enzyme database interface, version 0."""
+
 from __future__ import annotations
 
 import json
@@ -30,6 +32,9 @@ logger = getLogger("parameteriser")
 
 @dataclass
 class KineticParameterFromJson:
+
+    """Kinetic parameter entry parsed from BRENDA JSON database."""
+
     value: float
     substrate: str
     organism: str
@@ -183,6 +188,9 @@ def _read_km_and_kcat_from_db(enzyme: dict) -> tuple[pd.DataFrame, pd.DataFrame]
 
 @dataclass
 class Brenda:
+
+    """BRENDA enzyme database client with local caching."""
+
     _brenda_url: str = "https://www.brenda-enzymes.org"
     _cache_dir: Path = field(default=_default_cache_dir())
     _km_dir: Path = field(default=Path())
@@ -190,6 +198,7 @@ class Brenda:
     _seq_dir: Path = field(default=Path())
 
     def __post_init__(self) -> None:
+        """Initialize cache subdirectories."""
         self._cache_dir.mkdir(exist_ok=True, parents=True)
         self._km_dir = _default_path(self._cache_dir / "km")
         self._kcat_dir = _default_path(self._cache_dir / "kcat")
@@ -275,8 +284,9 @@ class Brenda:
         *,
         remove_cache: bool = False,
     ) -> None:
-        """Read in database in json format obtained from
-        https://www.brenda-enzymes.org/download.php
+        """Read database in JSON format from BRENDA download page.
+
+        Download from https://www.brenda-enzymes.org/download.php.
         """
         if remove_cache:
             self._clear_cache()
@@ -325,6 +335,7 @@ class Brenda:
         filter_mutant: bool = True,
         filter_missing_sequences: bool = True,
     ) -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Fetch KM and kcat values for an EC number with optional sequence annotation."""
         if check_ec and RE_EC.fullmatch(ec) is None:
             msg = "ec %s doesn't follow expected format"
             raise ValueError(msg, ec)
@@ -355,6 +366,7 @@ class Brenda:
         filter_mutant: bool = True,
         filter_missing_sequences: bool = True,
     ) -> pd.DataFrame:
+        """Fetch KM values for an EC number."""
         return self.get_kms_and_kcats(
             ec=ec,
             check_ec=check_ec,
@@ -372,6 +384,7 @@ class Brenda:
         filter_mutant: bool = True,
         filter_missing_sequences: bool = True,
     ) -> pd.DataFrame:
+        """Fetch kcat values for an EC number."""
         return self.get_kms_and_kcats(
             ec=ec,
             check_ec=check_ec,

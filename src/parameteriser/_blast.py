@@ -59,7 +59,7 @@ def _run_blastp(
     query: Path,
     db: Path,
 ) -> pd.DataFrame:
-    """Search protein database using a protein query
+    """Search protein database using a protein query.
 
     Attributes
     ----------

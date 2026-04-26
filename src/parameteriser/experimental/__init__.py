@@ -1,3 +1,5 @@
+"""Experimental kinetic parameter prediction tools."""
+
 import contextlib
 
 with contextlib.suppress(ImportError):

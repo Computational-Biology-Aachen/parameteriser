@@ -1,4 +1,8 @@
+"""Tests that the parameteriser public API imports correctly."""
+
+
 def test_import() -> None:
+    """Verify all public symbols are importable from parameteriser."""
     import parameteriser  # noqa: F401
     from parameteriser import (
         blast_sequence_against_others,  # noqa: F401

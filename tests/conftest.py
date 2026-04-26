@@ -1,4 +1,5 @@
 # type: ignore
+"""Shared pytest fixtures for parameteriser tests."""
 
 from __future__ import annotations
 
@@ -17,4 +18,5 @@ def _multiline_comparison(expected: list[str], test: str) -> None:
 
 @pytest.fixture()
 def multiline_comparison() -> Callable[..., None]:
+    """Return helper comparing a list of expected lines against a multiline string."""
     return _multiline_comparison

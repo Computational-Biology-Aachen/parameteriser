@@ -27,7 +27,7 @@ def _default_temp_dir() -> Path:
 
 
 def _clear_files_of_dir(path: Path) -> None:
-    """Assumes directory only contains files!"""
+    """Assumes directory only contains files."""
     for file in path.iterdir():
         file.unlink()
 
