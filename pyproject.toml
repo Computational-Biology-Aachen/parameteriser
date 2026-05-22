@@ -5,6 +5,7 @@ requires = ["hatchling"]
 [dependency-groups]
 dev = [
   "ruff>=0.15.11",
+  "toml>=0.10.2",
 ]
 
 [project]
