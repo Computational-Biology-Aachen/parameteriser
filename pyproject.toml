@@ -111,5 +111,5 @@ spaces_indent_inline_array = 2
 trailing_comma_inline_array = true
 
 [tool.uv]
-exclude-newer = "1 week"
+exclude-newer = "3 days"
 package = true
