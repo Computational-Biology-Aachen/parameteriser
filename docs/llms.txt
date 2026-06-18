@@ -1,0 +1,97 @@
+# Parameteriser
+
+> Parameteriser is a Python package for **kinetic parameter lookup** from the BRENDA enzyme database and sequence databases. It retrieves Km, kcat, Ki and other kinetic parameters for enzymes, supports BLAST-based sequence comparison across organisms, and provides estimation and visualization of parameter distributions. Maintained by the Computational Biology group at RWTH Aachen.
+
+## BRENDA interface
+
+The BRENDA module provides two API versions for querying kinetic parameters:
+
+- **v1** (`parameteriser.brenda._v1.Brenda`) — SOAP-based API. Requires email/password credentials. Queries BRENDA's web service directly.
+- **v0** (`parameteriser.brenda.v0.Brenda`) — Selenium-based web scraper. Reads from a local JSON database dump or crawls the BRENDA website. Provides `get_kms()`, `get_kcats()`, `get_kms_and_kcats()`, and `read_database()`.
+
+```python
+from parameteriser.brenda.v0 import Brenda
+
+client = Brenda()
+kms, kcats = client.get_kms_and_kcats("2.7.11.1")
+# kms: DataFrame with columns [value, substrate, organism, uniprot, commentary, is_mutant, is_recombinant]
+```
+
+## BLAST sequence search
+
+`blast_sequence_against_others` runs a protein BLAST query against a set of sequences to find homologs across organisms. Requires `blastp` and `makeblastdb` on PATH.
+
+```python
+from parameteriser import blast_sequence_against_others
+
+results = blast_sequence_against_others(query_sequence, proteome_sequences)
+# DataFrame with columns [qseqid, evalue, pident, qcovs]
+```
+
+## Parameter estimation
+
+`estimate_mean_std` estimates mean and standard deviation of a parameter distribution using kernel density estimation.
+
+```python
+from parameteriser import estimate_mean_std
+
+mean, std = estimate_mean_std(kms["value"])
+```
+
+## Selection and display utilities
+
+- `select_organism(df, organism)` — filter DataFrame rows by organism, drop organism column
+- `select_substrate(df, substrate)` — filter DataFrame rows by substrate, drop substrate column
+- `print_organisms(df)` — print sorted unique organisms from a parameter DataFrame
+- `print_table(vals)` — print a formatted table of strings
+
+## Plotting
+
+- `plot_parameter_distribution(kms, title)` — KDE plot of a single parameter distribution with rug marks
+- `plot_parameter_distributions(all_kms, organism_kms, organism_name=...)` — overlaid KDE comparing all organisms vs. a specific one, with boxplots
+
+## Quick start
+
+```python
+from parameteriser.brenda.v0 import Brenda
+from parameteriser import select_organism, estimate_mean_std, plot_parameter_distribution
+
+client = Brenda()
+kms = client.get_kms("2.7.11.1")  # hexokinase
+
+# Filter to a specific organism
+human_kms = select_organism(kms, "Homo sapiens")
+
+# Estimate parameters
+mean, std = estimate_mean_std(human_kms["value"])
+
+# Plot distribution
+plot_parameter_distribution(human_kms["value"], "Hexokinase Km (Homo sapiens)")
+```
+
+## Installation
+
+```bash
+uv sync              # PyPI; BRENDA interface only
+pixi install          # conda-forge; includes deepmolecules (broken)
+```
+
+## Notes
+
+- The `deepmolecules` integration (sequence-based parameter prediction) is currently broken due to a numpy 1/2 version mismatch. Only the BRENDA web interface is functional.
+- The v0 BRENDA client caches downloaded data locally. Use `read_database()` with a BRENDA JSON dump for offline use.
+- BLAST search requires NCBI BLAST+ tools installed separately.
+
+## MCP Server
+
+[MxlMCP](https://computational-biology-aachen.github.io/mxl-mcp/mxlpy/latest) is a Model Context Protocol server for the MxlPy ecosystem. It exposes modeling, simulation, fitting, and analysis capabilities as tools that AI assistants can call programmatically.
+
+## Tool family
+
+Parameteriser is part of a tool family for systems biology:
+
+- [MxlPy](https://github.com/Computational-Biology-Aachen/mxl-python) — mechanistic learning library (Python ODEs + ML)
+- [MxlBricks](https://github.com/Computational-Biology-Aachen/mxl-bricks) — composable reaction building blocks
+- [MxlModels](https://github.com/Computational-Biology-Aachen/mxl-models) — pre-defined model files (generated from MxlBricks)
+- [MxlWeb](https://github.com/Computational-Biology-Aachen/mxl-web) — browser ODE solver (SvelteKit + WebWorkers)
+- [PySBML](https://github.com/Computational-Biology-Aachen/pysbml) — SBML import/export bridge
