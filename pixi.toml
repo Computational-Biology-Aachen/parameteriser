@@ -3,12 +3,6 @@ numpy = ">=2.0.0"
 pip = ">=24.0,<25"
 python = ">=3.11,<3.12"
 
-[workspace]
-channels = ["conda-forge", "bioconda"]
-name = 'parameteriser'
-platforms = ["linux-64", "win-64", "osx-arm64"]
-exclude-newer = "3d"
-
 [pypi-dependencies]
 deepmolecules = ">=0.1.0"
 parameteriser = {path = ".", extras = ["dev"], editable = true}
@@ -21,3 +15,9 @@ clang = "*"
 
 [target.win-64.dependencies]
 posix = ">=1.0.0,<2"
+
+[workspace]
+channels = ["conda-forge", "bioconda"]
+exclude-newer = "3d"
+name = 'parameteriser'
+platforms = ["linux-64", "win-64", "osx-arm64"]

@@ -21,6 +21,7 @@ repos:
     rev: v0.23.1
     hooks:
       - id: toml-sort-fix
+        exclude: ^uv\.lock$
         args: [--in-place, --sort-table-keys]
         language: python
         types: [toml]
