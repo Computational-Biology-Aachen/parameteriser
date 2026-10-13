@@ -1,3 +1,5 @@
+# Copyright 2025 Marvin van Aalst, Anna Matuszyńska
+
 """BRENDA enzyme database interface, version 0."""
 
 from __future__ import annotations

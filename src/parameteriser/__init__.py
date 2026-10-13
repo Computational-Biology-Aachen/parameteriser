@@ -1,3 +1,5 @@
+# Copyright 2025 Marvin van Aalst, Anna Matuszyńska
+
 """Kinetic parameter lookup from BRENDA and sequence databases."""
 
 from __future__ import annotations

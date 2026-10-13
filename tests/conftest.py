@@ -1,3 +1,5 @@
+# Copyright 2025 Marvin van Aalst, Anna Matuszyńska
+
 # type: ignore
 """Shared pytest fixtures for parameteriser tests."""
 

@@ -1,3 +1,5 @@
+# Copyright 2025 Marvin van Aalst, Anna Matuszyńska
+
 """Kinetic parameter prediction via deepmolecules models."""
 
 from __future__ import annotations
